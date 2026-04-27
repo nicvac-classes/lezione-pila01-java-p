@@ -1,26 +1,73 @@
-//LEGGERE LE ISTRUZIONI NEL FILE README.md
+public class Nodo<T> {
+    T dato;
+    Nodo<T> next;
 
-//Import di Classi Java necessarie al funzionamento del programma
-import java.util.Scanner;
-
-// Classe principale, con metodo main
-class Esercizio {
-    // Il programma parte con una chiamata a main().
-    public static void main(String args[])
-    {
-        //Variabili del programma
-        String nome;
-
-        //Creo l'oggetto in per l'input da tastiera
-        Scanner in = new Scanner( System.in );
-
-        //Leggo l'input da tastiera
-        System.out.print("Inserisci il tuo nome: ");
-        nome = in.nextLine();
-
-        //Output del nome acquisito da tastiera
-        System.out.println("Ciao "+nome+"!");
+    public Nodo(T dato) {
+        this.dato = dato;
+        this.next = null;
     }
 }
 
-//LEGGERE LE ISTRUZIONI NEL FILE README.md
+public class Pila<T> {
+    private Nodo<T> top;
+
+    public Pila() {
+        this.top = null;
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    public void push(T dato) {
+        Nodo<T> nuovoNodo = new Nodo<>(dato);
+        nuovoNodo.next = top;
+        top = nuovoNodo;
+    }
+
+    public T pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("Pila vuota");
+        }
+
+        T dato = top.dato;
+        top = top.next;
+        return dato;
+    }
+
+    public T peek() {
+        if (isEmpty()) {
+            throw new RuntimeException("Pila vuota");
+        }
+
+        return top.dato;
+    }
+
+    public int size() {
+        int contatore = 0;
+        Nodo<T> corrente = top;
+
+        while (corrente != null) {
+            contatore++;
+            corrente = corrente.next;
+        }
+
+        return contatore;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[CIMA] ");
+
+        Nodo<T> corrente = top;
+        while (corrente != null) {
+            sb.append(corrente.dato);
+            sb.append(" → ");
+            corrente = corrente.next;
+        }
+
+        sb.append("[FONDO]");
+        return sb.toString();
+    }
+}
